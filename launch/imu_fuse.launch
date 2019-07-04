@@ -1,0 +1,42 @@
+
+<launch>
+	<param name="use_sim_time" value="true"/>
+	
+    <node pkg="prj_2" type="ack_odom" name="ack_odom" output="screen"/>
+
+	<node pkg="imu_complementary_filter" type="complementary_filter_node" name="complementary_filter_gain_node" output="screen" clear_params="true">
+		<remap from="imu/data_raw" to="swiftnav/rear/imu"/>
+		<remap from="imu/mag" to="swiftnav/rear/magnetometer"/>
+		<remap from="imu/data" to="navigation/imu_filtered"/>
+		<param name="do_bias_estimation" value="true"/>
+		<param name="do_adaptive_gain" value="true"/>
+		<param name="use_mag" value="true"/>
+		<param name="gain_acc" value="0.01"/>
+		<param name="gain_mag" value="0.01"/>
+	</node>
+
+	<node pkg="robot_localization" type="ekf_localization_node" name="robot_localization_ekf_node_odom" clear_params="true" output="screen">
+		<param name="frequency" value="30"/>
+		<param name="sensor_timeout" value="0.1"/>
+		<param name="two_d_mode" value="true"/>
+		<param name="transform_time_offset" value="0.0"/>
+
+		<param name="odom_frame" value="world"/>
+		<param name="base_link_frame" value="car"/>
+		<param name="world_frame" value="world"/>
+
+		<param name="odom0" value="navigation/odom"/>
+		<param name="imu0" value="navigation/imu_filtered"/>
+
+		<rosparam param="odom0_config">[true, true, true, false, false, true, true, true, false, false, false, true, false, false, false]</rosparam>
+		<rosparam param="imu0_config">[false, false, false, true, true, true, false, false, false, true, true, true, true, true, true]</rosparam>
+
+		<param name="odom0_differential" value="false"/>
+		<param name="imu0_differential" value="false"/>
+
+		<param name="odom0_relative" value="false"/>
+		<param name="imu0_relative" value="false"/>
+
+		<param name="print_diagnostics" value="true"/>
+	</node>
+</launch>    

@@ -8,19 +8,13 @@
 
 
 class Node{
-    private:
+    private: 
         ros::NodeHandle n;
-        ros::Subscriber data;
-        geometry_msgs::Point point;
-        double th_rad, velocity, radius, omega, x, y, th, vx, vy, dt;
-
-        // compute and publish odometry
+        double x, y, th;                        // odometry data to be published
+        ros::Subscriber data;                   // get data from bag
+        ros::Publisher pub_odom;                // publish odometry in topic
+        ros::Time last_time;
         tf::TransformBroadcaster br;
-        nav_msgs::Odometry odom;
-        geometry_msgs::Quaternion geom_q;
-        geometry_msgs::TransformStamped geom_trans;
-        ros::Publisher pub_odom;
-        ros::Time current_time, last_time;
 
     public:
         Node(){
@@ -28,63 +22,64 @@ class Node{
             y = 0;
             th = 0;
 
-            data = n.subscribe("/speedsteer", 1, &Node::Odom, this);
+            data = n.subscribe("/speedsteer", 1, &Node::Odometry, this);
             pub_odom = n.advertise<nav_msgs::Odometry>("navigation/odom", 1);
 
-            current_time = ros::Time::now();
+            // current_time = ros::Time::now();
             last_time = ros::Time::now();
         }
 
-    void Odom(const geometry_msgs::PointStamped::ConstPtr& msg){
-        point = msg->point;
-        th_rad = point.x/18*3.14159/180;            // from degrees to rad
-        velocity = point.y/3.6;                     // y is expressed in km/h, we need m/s
-        radius = 1.765/tan(th_rad);
-        omega = velocity/radius;
+    void Odometry(const geometry_msgs::PointStamped::ConstPtr& msg){
+        geometry_msgs::Point temp=msg->point;
+        double th_rad, velocity, omega, vx, vy, dt;
+        std_msgs::Header header;
+        ros::Time current_time;
 
-        Node::odometry(velocity, omega);
-    }
+        // Ackermann model
+        // point = msg->point;
+        th_rad = temp.x/18*3.14159/180;            // from degrees to rad
+        velocity = temp.y/3.6;                     // y is expressed in km/h, we need m/s
+        omega = velocity*tan(th_rad)/1.765;
 
-    void odometry(double velocity, double omega){
         // compute pose parameters
         vx = velocity*cos(th);
         vy = velocity*sin(th);
 
-        current_time = ros::Time::now();
+        header = msg->header;
+        current_time = header.stamp;
         dt = (current_time - last_time).toSec();
+        if(abs(dt) > 1){
+            last_time = header.stamp;
+            dt = (header.stamp - last_time).toSec();
+        }
         x += vx*dt;
         y += vy*dt;
         th += omega*dt;
 
-        // create the tf transformation
-        geom_trans.header.stamp = current_time;
-        geom_trans.header.frame_id = "world";
-        geom_trans.child_frame_id = "car";
-
-        geom_q = tf::createQuaternionMsgFromYaw(th);
-        geom_trans.transform.translation.x = x;
-        geom_trans.transform.translation.y = y;
-        geom_trans.transform.translation.z = 0.0;
-        geom_trans.transform.rotation = geom_q;
-
-        //send the transform
-        br.sendTransform(geom_trans);
-
         // publish nav_msgs/Odometry topic
-        odom.header.stamp = current_time;
+        nav_msgs::Odometry odom;
+        odom.header = header;
         odom.header.frame_id = "world";
-
+        odom.child_frame_id = "car";
         odom.pose.pose.position.x = x;
         odom.pose.pose.position.y = y;
         odom.pose.pose.position.z = 0.0;
-        odom.pose.pose.orientation = geom_q;
-
-        odom.child_frame_id = "car";
+        odom.pose.pose.orientation = tf::createQuaternionMsgFromYaw(th);
         odom.twist.twist.linear.x = vx;
         odom.twist.twist.linear.y = vy;
         odom.twist.twist.angular.z = omega;
-
         pub_odom.publish(odom);
+
+        // create the tf transformation
+        geometry_msgs::TransformStamped geom_trans;
+        geom_trans.header.stamp = current_time;
+        geom_trans.header.frame_id = "world";
+        geom_trans.child_frame_id = "car";
+        geom_trans.transform.translation.x = x;
+        geom_trans.transform.translation.y = y;
+        geom_trans.transform.translation.z = 0.0;
+        geom_trans.transform.rotation = tf::createQuaternionMsgFromYaw(th);
+        br.sendTransform(geom_trans);
 
         last_time = current_time; 
     }
