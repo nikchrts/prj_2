@@ -74,7 +74,7 @@ class Node{
         geometry_msgs::TransformStamped geom_trans;
         geom_trans.header.stamp = current_time;
         geom_trans.header.frame_id = "odom";
-        geom_trans.child_frame_id = "base_link";
+        geom_trans.child_frame_id = "car";
         geom_trans.transform.translation.x = x;
         geom_trans.transform.translation.y = y;
         geom_trans.transform.translation.z = 0.0;

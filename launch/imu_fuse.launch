@@ -17,24 +17,18 @@
 	</node>
 
 	<node pkg="robot_localization" type="navsat_transform_node" name="navsat_node" output="screen" respawn="true">
-		<param name="magnetic_declination" value="0.048578"/>
-		<param name="yaw_offset" value="0"/>		
-        <param name="frequency" value="30"/>
-    	<param name="broadcast_utm_transform" value="true"/>
-    	<param name="use_odometry_yaw" value="false"/>
-		
-		<!--<remap from = "gps/fix" to="swiftnav/rear/gps"/>
-        <param name = "use_odometry_yaw" value="false"/>-->
-
-		<param name="publish_filtered_gps" value="true"/>
-		<!--<param name="zero_altitude" value="true"/>-->
-
 		<remap from="imu/data" to="navigation/imu_filtered"/>
 		<remap from="gps/fix" to="swiftnav/rear/gps"/>
-		<!--<remap from="odometry/filtered" to="navigation/odom"/>-->
+		
+		<param name="magnetic_declination" value="0.048578"/>
+		<param name="yaw_offset" value="2.775"/>		
+        <param name="frequency" value="30"/>
 
+		<param name="zero_altitude" value="true"/>
+    	<param name="broadcast_utm_transform" value="true"/>
+        <param name="use_odometry_yaw" value="true"/>
+		<param name="publish_filtered_gps" value="true"/>
 	</node>
-
 
 	<node pkg="robot_localization" type="ekf_localization_node" name="ekf_imu_node" clear_params="true" output="screen">
 		<param name="frequency" value="30"/>
@@ -49,41 +43,11 @@
 		<param name="odom0" value="navigation/odom"/>
 		<param name="imu0" value="navigation/imu_filtered"/>
 
-		<!--<rosparam param="odom0_config">[true, true, false, false, false, false, true, true, false, false, false, true, false, false, false]</rosparam>-->
 		<rosparam param="odom0_config">[true, true, false, false, false, false, true, true, false, false, false, false, false, false, false]</rosparam>
-
 		<rosparam param="imu0_config">[false, false, false, false, false, true, false, false, false, false, false, true, true, true, false]</rosparam>
 
 		<param name="odom0_differential" value="false"/>
-		<param name="imu0_differential" value="true"/>
-
-		<!--<param name="odom0_relative" value="false"/>
-		<param name="imu0_relative" value="false"/>-->
-
-		<param name="print_diagnostics" value="true"/>
+		<param name="imu0_differential" value="false"/>
 	</node>
-
-	<!--<node pkg="robot_localization" type="ekf_localization_node" name="ekf_gps_node" clear_params="true" output="screen">
-		<param name="frequency" value="30"/>
-		<param name="sensor_timeout" value="0.1"/><param name="odom0" value="navigation/odom"/>
-		<param name="two_d_mode" value="true"/>
-		<param name="transform_time_offset" value="0.0"/>
-
-		<param name="world_frame" value="map"/>
-
-		<param name="odom0" value="navigation/odom"/>
-		<param name="odom1" value="gps/filtered"/>
-		<param name="imu0" value="navigation/imu_filtered"/>
-
-		<rosparam param="odom0_config">[false, false, false, false, false, false, true, true, false, false, false, false, false, false, false]</rosparam>
-		<rosparam param="odom1_config">[true, true, false, false, false, false, false, false, false, false, false, false, false, false, false]</rosparam>
-		<rosparam param="imu0_config">[false, false, false, false, false, true, false, false, false, false, false, true, true, true, false]</rosparam>
-
-		<param name="odom0_differential" value="false"/>
-		<param name="odom1_differential" value="false"/>
-		<param name="imu0_differential" value="true"/>
-
-		<param name="print_diagnostics" value="true"/>
-	</node>-->
 
 </launch>    
