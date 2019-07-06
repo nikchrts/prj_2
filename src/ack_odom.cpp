@@ -59,8 +59,8 @@ class Node{
         // publish nav_msgs/Odometry topic
         nav_msgs::Odometry odom;
         odom.header = header;
-        odom.header.frame_id = "world";
-        odom.child_frame_id = "car";
+        odom.header.frame_id = "odom";
+        odom.child_frame_id = "base_link";
         odom.pose.pose.position.x = x;
         odom.pose.pose.position.y = y;
         odom.pose.pose.position.z = 0.0;
@@ -73,8 +73,8 @@ class Node{
         // create the tf transformation
         geometry_msgs::TransformStamped geom_trans;
         geom_trans.header.stamp = current_time;
-        geom_trans.header.frame_id = "world";
-        geom_trans.child_frame_id = "car";
+        geom_trans.header.frame_id = "odom";
+        geom_trans.child_frame_id = "base_link";
         geom_trans.transform.translation.x = x;
         geom_trans.transform.translation.y = y;
         geom_trans.transform.translation.z = 0.0;
