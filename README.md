@@ -10,6 +10,7 @@ Compute accurate and high frequency GPS position fusing. We use the following:
 - odometry, which is computed from wheel encoders and the steering angle
 - IMU data (Piksi Multi board)
 - GPS data (Piksi Multi board)
+
 More specifically, we had to:
 - Compute the odometry using a node that subscribes to bag data and publishes a nav_msgs/Odometry topic
 - Use the *imu_tools* package to elaborate the raw IMU data. A complementary filter was used for this purpose.
