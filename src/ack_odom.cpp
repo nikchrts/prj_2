@@ -25,7 +25,6 @@ class Node{
             data = n.subscribe("/speedsteer", 1, &Node::Odometry, this);
             pub_odom = n.advertise<nav_msgs::Odometry>("navigation/odom", 1);
 
-            // current_time = ros::Time::now();
             last_time = ros::Time::now();
         }
 
@@ -36,7 +35,6 @@ class Node{
         ros::Time current_time;
 
         // Ackermann model
-        // point = msg->point;
         th_rad = temp.x/18*3.14159/180;            // from degrees to rad
         velocity = temp.y/3.6;                     // y is expressed in km/h, we need m/s
         omega = velocity*tan(th_rad)/1.765;
