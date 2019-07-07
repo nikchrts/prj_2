@@ -40,7 +40,14 @@ preserves the proper function of the estimation and fusing. The most important o
   <img src="https://github.com/nikchrts/prj_2/blob/master/mapviz-gps.png" alt="drawing" width="780">
 </p>
 
+
+## How to use it
+To integrate the project in your own workspace and run it properly, follow these simple steps:
+- by extracting the contents of the zip file, a 'prj_2' folder should be created
+- place it inside the `src` folder of your catkin workspace
+- next, cd to catkin workspace and compile the workspace, using `catkin_make`.
+- type `roslaunch prj_2 odom.launch`<br>Attention!! In order to get actual results, the bag should have been also executed.
+
 ## Further Considerations
 * The bag should be manually executed in order the demonstration of the project to be meaningful.
-* Our interpretation for the reset and the (x,y) position configuration is to only change accordingly the position of the car and all the other variables to remain exactly the same. That means that the car will be moved to the desired position and it will start moving to a different circular trajectory than the initial one, since the rest of the variables (eg yaw angle) do not experience a change.
-* The car is moving initially using the Differential Drive Kinematics. 
+* For the play of the bag, one MUST include the parameter `--clock`: `rosbag play --clock <path-to-bag-file>`
