@@ -32,7 +32,7 @@ preserves the proper function of the estimation and fusing. The most important o
       - input configurations: as said above, x, y and yaw values are of interest. We use the odometry topic for the first two (x and y) and the imu orientation for the yaw.
   3. Last step, the GPS fusing, which is accomplished with the *navsat* node. We get the GPS data in long/lat form and we combine it with the other data to get the (global) estimations of x, y values. For the GPS estimation the tf from *map* to *odom* should be used and therefore the static tf has been added in the beginning. The proper offset values are critically important for the performance. These values were found either from lab examples (magnetic declination) or by observing the performance of the output for different values (yaw).
 
-<br> At the end, the results were demonstrated using *mapviz* for both odometry and GPS data. The blue lines represent the final, estimated result, whereas the red lines correspond to raw GPS data (GPS plots) and to the odometry data of the odometry node (odometry plot).
+At the end, the results were demonstrated using *mapviz* for both odometry and GPS data. The blue lines represent the final, estimated result, whereas the red lines correspond to raw GPS data (GPS plots) and to the odometry data of the odometry node (odometry plot).
 
 <p align="center">
   <img src="https://github.com/nikchrts/prj_2/blob/master/mapviz-odom.png" alt="drawing" width="775">
