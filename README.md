@@ -46,7 +46,7 @@ To integrate the project in your own workspace and run it properly, follow these
 - by extracting the contents of the zip file, a 'prj_2' folder should be created
 - place it inside the `src` folder of your catkin workspace
 - next, cd to catkin workspace and compile the workspace, using `catkin_make`.
-- type `roslaunch prj_2 odom.launch`<br>Attention!! In order to get actual results, the bag should have been also executed.
+- type `roslaunch prj_2 odom.launch` Remember!! The bag should have been also executed.
 
 ## Further Considerations
 * The bag should be manually executed using the command `rosbag play --clock <path-to-bag-file>`. The *--clock* parameter is essential for the proper performance.
