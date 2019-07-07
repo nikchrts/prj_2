@@ -30,10 +30,11 @@ preserves the proper function of the estimation and fusing. The most important o
       - *two_d_mode*: the estimation is being made in a 2D plane. Having said that, the important variables are x, y position and the yaw angle (and their corresponding velocities).
       - frame names: the world frame value declares which tf will be used for the estimation. Under this configurations, we will the odom-base_link tf, where the local positioning actually takes place.
       - input configurations: as said above, x, y and yaw values are of interest. We use the odometry topic for the first two (x and y) and the imu orientation for the yaw.
-  3. Last step, the GPS fusing, which is accomplished with the *navsat* node
+  3. Last step, the GPS fusing, which is accomplished with the *navsat* node. We get the GPS data in long/lat form and we combine it with the other data to get the (global) estimations of x, y values. For the GPS estimation the tf from *map* to *odom* should be used and therefore the static tf has been added in the beginning. Important paamteres to notice:
+      - offsets: the proper offset values are critically important for the performance. These values were found either from lab examples (magnetic declination) or by observing the performance of the output for different values (yaw).
 
-<br> During the demonstration, the tf tree should normally be similar with the following image
-![tf-tree](https://raw.githubusercontent.com/nikchrts/prj_1/master/tf_tree.png)
+<br> At the end, the results were demonstrated using *mapviz*. Both odometry and GPS data were plotted. For both case, blue lines represent the final, estimated and filtered result, whereas the red lines correspond to raw GPS data for the GPS plots and the odometry data of the odometry node for the odometry plot.
+![tf-tree](https://github.com/nikchrts/prj_2/blob/master/mapviz-odom.png)
 
 ## Further Considerations
 * The bag should be manually executed in order the demonstration of the project to be meaningful.
