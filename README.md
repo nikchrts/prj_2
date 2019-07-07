@@ -34,7 +34,7 @@ preserves the proper function of the estimation and fusing. The most important o
       - offsets: the proper offset values are critically important for the performance. These values were found either from lab examples (magnetic declination) or by observing the performance of the output for different values (yaw).
 
 <br> At the end, the results were demonstrated using *mapviz*. Both odometry and GPS data were plotted. For both case, blue lines represent the final, estimated and filtered result, whereas the red lines correspond to raw GPS data for the GPS plots and the odometry data of the odometry node for the odometry plot.
-![tf-tree](https://github.com/nikchrts/prj_2/blob/master/mapviz-odom.png)
+![tf-tree](https://github.com/nikchrts/prj_2/blob/master/mapviz-odom.png | width=100)
 
 ## Further Considerations
 * The bag should be manually executed in order the demonstration of the project to be meaningful.
