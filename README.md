@@ -35,8 +35,8 @@ preserves the proper function of the estimation and fusing. The most important o
 At the end, the results were demonstrated using *mapviz* for both odometry and GPS data. The blue lines represent the final, estimated result, whereas the red lines correspond to raw GPS data (GPS plots) and to the odometry data of the odometry node (odometry plot).
 
 <p align="center">
-  <img src="https://github.com/nikchrts/prj_2/blob/master/mapviz-odom.png" alt="drawing" width="775">
-  <img src="https://github.com/nikchrts/prj_2/blob/master/mapviz-gps.png" alt="drawing" width="775">
+  <img src="https://github.com/nikchrts/prj_2/blob/master/mapviz-odom.png" alt="drawing" width="780">
+  <img src="https://github.com/nikchrts/prj_2/blob/master/mapviz-gps.png" alt="drawing" width="780">
 </p>
 
 
