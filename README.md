@@ -25,9 +25,10 @@ as frame_id *odom* and as child_frame_id *car*. The selection of different child
 - **odom.launch**:
 The main file of the project.
   1. Initially, we use the parameter *use_sim_time* in order to be able to use properly the bag data (and the corresponding time). The odometry node is initialized and three static tf are set. Their presence 
-preserve the proper function of the estimation and fusing. The most important of them is the one between the frames *map* and *odom*, which is used for the GPS data fusing.
-  2. Next, the IMU data are fused using the complementary filter, which gets the bag data and outputs a topic containing the estimated orientation of the car.
-This topic together with the output of the odometry node are used as inputs to the EKF node, in order to estimate a car position, with respect to the *odom* frame (local positioning).
+preserves the proper function of the estimation and fusing. The most important of them is the one between the frames *map* and *odom*, which is used for the GPS data fusing.
+  2. Next, the IMU data are fused using the complementary filter, which gets the bag data and outputs a topic containing the estimated orientation of the car (*imu/data*). This topic together with the output of the odometry node (*navigation/odom*) are used as inputs to the EKF node, in order to estimate a car position, with respect to the *odom* frame (local positioning).
+  
+  asfdasdfa
   3. Last step, the GPS fusing, which is accomplished with the *navsat* node
 
 <br> During the demonstration, the tf tree should normally be similar with the following image
