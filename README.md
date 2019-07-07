@@ -49,5 +49,4 @@ To integrate the project in your own workspace and run it properly, follow these
 - type `roslaunch prj_2 odom.launch`<br>Attention!! In order to get actual results, the bag should have been also executed.
 
 ## Further Considerations
-* The bag should be manually executed in order the demonstration of the project to be meaningful.
-* For the play of the bag, one MUST include the parameter `--clock`: `rosbag play --clock <path-to-bag-file>`
+* The bag should be manually executed using the command `rosbag play --clock <path-to-bag-file>`. The *--clock* parameter is essential for the proper performance.
