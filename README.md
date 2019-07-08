@@ -24,8 +24,7 @@ An nav_msgs/Odometry topic, named *navigation/odom*, is published using *odom* a
 as frame_id *odom* and as child_frame_id *car*. The selection of different child_frame_id names was done for comparison purposes.
 - **odom.launch**:
 The main file of the project.
-  1. Initially, we use the parameter *use_sim_time* in order to be able to use properly the bag data (and the corresponding time). The odometry node is initialized and three static tf are set. Their presence 
-preserves the proper function of the estimation and fusing. The most important of them is the one between the frames *map* and *odom*, which is used for the GPS data fusing.
+  1. Initially, we use the parameter *use_sim_time* in order to be able to use properly the bag data (and the corresponding time). The odometry node is initialized and one static tf (between the frames *map* and *odom*) is set to preserve the proper function of the GPS fusing.
   2. Next, the IMU data are fused using the complementary filter, which gets the bag data and outputs a topic containing the estimated orientation of the car (*imu/data*). This topic together with the output of the odometry node (*navigation/odom*) are used as inputs to the EKF node, in order to estimate a car position, with respect to the *odom* frame (local positioning). Important parameters for the EKF implementation are:
       - *two_d_mode*: the estimation is being made in a 2D plane. Having said that, the important variables are x, y position and the yaw angle (and their corresponding velocities).
       - frame names: the world frame value declares which tf will be used for the estimation. Under this configurations, we will the odom-base_link tf, where the local positioning actually takes place.
@@ -39,6 +38,11 @@ At the end, the results were demonstrated using *mapviz* for both odometry and G
   <img src="https://github.com/nikchrts/prj_2/blob/master/mapviz-gps.png" alt="drawing" width="780">
 </p>
 
+The tf tree of our implementation is shown below. Notice that from *odom* we have two child frames. The *base_link* frame is the actual being used for the local position estimation, whereas the *car* frame is only used from odometry node.
+
+<p align="center">
+  <img src="https://github.com/nikchrts/prj_2/blob/master/frames.png" alt="drawing" width="780">
+</p>
 
 ## How to use it
 To integrate the project in your own workspace and run it properly, follow these simple steps:
