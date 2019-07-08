@@ -2,10 +2,6 @@
 <launch>
 	<param name="use_sim_time" value="true"/>
 	
-	<node pkg="tf" type="static_transform_publisher" name="rearGPS" args="0 0 0 0 0 0 1 base_link rgps 100"/>
-	
-	<!--<node pkg="tf" type="static_transform_publisher" name = "rearIMU" args="0 0 0 0 0 0 1 car rimu 100"/>	-->
-	
 	<node pkg="tf" type="static_transform_publisher" name="static_map" args="0 0 0 0 0 0 1 map odom 100"/>
     
 	<node pkg="prj_2" type="ack_odom" name="ack_odom" output="screen"/>
